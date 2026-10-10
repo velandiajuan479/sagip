@@ -1,0 +1,317 @@
+/* ==========================================================================
+   SAGIP - Modern Sidebar Menu Navigation
+   ========================================================================== */
+
+:root {
+  --sidebar-collapsed-w: 64px;
+  --sidebar-expanded-w: 260px;
+  --sidebar-bg: #00324D;
+  --sidebar-bg-dark: #002235;
+  --sidebar-hover-bg: #39A900;
+  --sidebar-active-bg: #2d8500;
+  --sidebar-text: #e2e8f0;
+  --sidebar-text-hover: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Base Reset for Menu Elements */
+nav.main-menu,
+nav.main-menu * {
+  box-sizing: border-box;
+}
+
+/* Sidebar Wrapper */
+.main-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: var(--sidebar-collapsed-w);
+  /*background: linear-gradient(180deg, var(--sidebar-bg) 0%, var(--sidebar-bg-dark) 100%);*/
+  background-color: rgb(0 118 46 / var(--tw-bg-opacity, 1));
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index: 1040;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+/* Hover / Expanded State */
+.main-menu:hover,
+nav.main-menu.expanded {
+  width: var(--sidebar-expanded-w);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Branding at Top of Menu */
+.main-menu .branding {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 12px;
+  min-height: 70px;
+  border-bottom: 1px solid var(--sidebar-border);
+  background: rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.main-menu .branding-logo {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.main-menu .branding-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.main-menu:hover .branding-title,
+nav.main-menu.expanded .branding-title {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.main-menu .branding-title .palabra1 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #39A900;
+  letter-spacing: 0.5px;
+}
+
+.main-menu .branding-title .palabra2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* Scrollable Nav List */
+.main-menu .scrollbar {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.main-menu .scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.main-menu .scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.main-menu .scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.main-menu .scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Menu Items List */
+.main-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.main-menu li {
+  position: relative;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.main-menu li > a {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 18px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Centered Icons */
+.main-menu li > a i {
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #94a3b8;
+  transition: color 0.2s ease, transform 0.2s ease;
+  margin-right: 12px;
+}
+
+.main-menu li:hover > a i {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* Nav Item Text */
+.main-menu .nav-text {
+  flex: 1;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.main-menu:hover .nav-text,
+nav.main-menu.expanded .nav-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Hover & Active States */
+.main-menu li:hover > a {
+  background-color: var(--sidebar-hover-bg);
+  color: var(--sidebar-text-hover);
+  box-shadow: 0 2px 8px rgba(57, 169, 0, 0.35);
+}
+
+.main-menu li.active > a,
+.main-menu li.darkerli.active > a {
+  background-color: var(--sidebar-active-bg);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.main-menu li.active > a i {
+  color: #ffffff;
+}
+
+/* Special Logout Item */
+.main-menu li.logout {
+  margin-top: 10px;
+  border-top: 1px solid var(--sidebar-border);
+  padding-top: 6px;
+}
+
+.main-menu li.logout > a i {
+  color: #f87171;
+}
+
+.main-menu li.logout:hover > a {
+  background-color: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
+}
+
+.main-menu li.logout:hover > a i {
+  color: #ffffff;
+}
+
+/* Mobile Hamburger Toggle Button */
+.menu--btn-spt-men {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 7px;
+  width: 52px;
+  height: 52px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 1050;
+  align-items: center;
+  justify-content: center;
+  color: #39A900;
+  font-size: 1.25rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.menu--btn-spt-men:hover {
+  background: #f8fafc;
+  color: #007832;
+  transform: scale(1.05);
+}
+
+/* Responsive Mobile Rules */
+@media screen and (max-width: 768px) {
+
+  .menu--btn-spt-men {
+    display: flex;
+  }
+
+  .main-menu {
+    transform: translateX(-100%);
+    width: var(--sidebar-expanded-w) !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .main-menu.menu-despleg,
+  .main-menu.expanded {
+    transform: translateX(0);
+  }
+
+  .main-menu .branding-title {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .main-menu .nav-text {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* When menu is open, move toggle button */
+  .menu-btn-style {
+    left: calc(var(--sidebar-expanded-w) + 12px);
+  }
+}
+
+@media screen and (min-width: 769px) {
+  nav.main-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+    height: 100vh;
+    height: 100dvh;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
